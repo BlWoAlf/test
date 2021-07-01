@@ -45,10 +45,26 @@ $(function(){
             },
             options: {
                 scales: {
+                    y:{
+                        // max: 99999999999999,
+                        // suggestedMax: 999999999999,
+                        // suggestedMin: 99999999999,
+                        min: 99999999,
+                    },
                     yAxes: [{
+                        scales: {
+                            // suggestedMax: 999999999999,
+                            // max: 99999999999999,
+                            // suggestedMin: 99999999999,
+                            min: 99999999,
+                        },
+                        // max: 99999999999999,
+                        min: 99999999,
+                        // suggestedMin: 99999999999,
                         ticks: {
                             // beginAtZero: true,
-                        }
+                            count: 9999999999999,
+                        },                        
                     }],
                 },
                 elements: {
@@ -63,42 +79,42 @@ $(function(){
             }
         });
 
-        $('button').click(function(){
-            var data = [];
-            myChart.data.datasets.forEach(function(item, i, arr) {
-                data[i] = {label: item.label, data: item.data, backgroundColor: item.backgroundColor, borderColor: item.borderColor};
-            });
+        // $('button').click(function(){
+        //     var data = [];
+        //     myChart.data.datasets.forEach(function(item, i, arr) {
+        //         data[i] = {label: item.label, data: item.data, backgroundColor: item.backgroundColor, borderColor: item.borderColor};
+        //     });
 
-            var color = '';
-            if($(this).attr('name') == 'kr'){
-                color = 'red';
-            }
-            else if($(this).attr('name') == 'sn'){
-                color = 'blue';
-            }
-            var value = $('.new_data').val();
-            $.ajax({
-                method: 'post',
-                url: 'graph',
-                data: {
-                    data: data,
-                    graph: color,
-                    value: value,
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-            });
-        });
+        //     var color = '';
+        //     if($(this).attr('name') == 'kr'){
+        //         color = 'red';
+        //     }
+        //     else if($(this).attr('name') == 'sn'){
+        //         color = 'blue';
+        //     }
+        //     var value = $('.new_data').val();
+        //     $.ajax({
+        //         method: 'post',
+        //         url: 'graph',
+        //         data: {
+        //             data: data,
+        //             graph: color,
+        //             value: value,
+        //         },
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //     });
+        // });
 
-        Echo.channel('aboba')
-        .listen('GraphUpdated', (e) => {
-            myChart.data.datasets.forEach(function(item, i, arr) {
-                myChart.data.datasets[i].data = e.data[i].data;
-            });
-            myChart.data.labels = makeColumns(myChart.data.datasets);
-            myChart.update();
-        });
+        // Echo.channel('aboba')
+        // .listen('GraphUpdated', (e) => {
+        //     myChart.data.datasets.forEach(function(item, i, arr) {
+        //         myChart.data.datasets[i].data = e.data[i].data;
+        //     });
+        //     myChart.data.labels = makeColumns(myChart.data.datasets);
+        //     myChart.update();
+        // });
     });
 
     // Echo.channel('aboba')

@@ -1886,8 +1886,25 @@ $(function () {
       },
       options: {
         scales: {
+          y: {
+            // max: 99999999999999,
+            // suggestedMax: 999999999999,
+            // suggestedMin: 99999999999,
+            min: 99999999
+          },
           yAxes: [{
-            ticks: {// beginAtZero: true,
+            scales: {
+              // suggestedMax: 999999999999,
+              // max: 99999999999999,
+              // suggestedMin: 99999999999,
+              min: 99999999
+            },
+            // max: 99999999999999,
+            min: 99999999,
+            // suggestedMin: 99999999999,
+            ticks: {
+              // beginAtZero: true,
+              count: 9999999999999
             }
           }]
         },
@@ -1901,46 +1918,40 @@ $(function () {
           enabled: false
         }
       }
-    });
-    $('button').click(function () {
-      var data = [];
-      myChart.data.datasets.forEach(function (item, i, arr) {
-        data[i] = {
-          label: item.label,
-          data: item.data,
-          backgroundColor: item.backgroundColor,
-          borderColor: item.borderColor
-        };
-      });
-      var color = '';
-
-      if ($(this).attr('name') == 'kr') {
-        color = 'red';
-      } else if ($(this).attr('name') == 'sn') {
-        color = 'blue';
-      }
-
-      var value = $('.new_data').val();
-      $.ajax({
-        method: 'post',
-        url: 'graph',
-        data: {
-          data: data,
-          graph: color,
-          value: value
-        },
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-    });
-    Echo.channel('aboba').listen('GraphUpdated', function (e) {
-      myChart.data.datasets.forEach(function (item, i, arr) {
-        myChart.data.datasets[i].data = e.data[i].data;
-      });
-      myChart.data.labels = makeColumns(myChart.data.datasets);
-      myChart.update();
-    });
+    }); // $('button').click(function(){
+    //     var data = [];
+    //     myChart.data.datasets.forEach(function(item, i, arr) {
+    //         data[i] = {label: item.label, data: item.data, backgroundColor: item.backgroundColor, borderColor: item.borderColor};
+    //     });
+    //     var color = '';
+    //     if($(this).attr('name') == 'kr'){
+    //         color = 'red';
+    //     }
+    //     else if($(this).attr('name') == 'sn'){
+    //         color = 'blue';
+    //     }
+    //     var value = $('.new_data').val();
+    //     $.ajax({
+    //         method: 'post',
+    //         url: 'graph',
+    //         data: {
+    //             data: data,
+    //             graph: color,
+    //             value: value,
+    //         },
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //         },
+    //     });
+    // });
+    // Echo.channel('aboba')
+    // .listen('GraphUpdated', (e) => {
+    //     myChart.data.datasets.forEach(function(item, i, arr) {
+    //         myChart.data.datasets[i].data = e.data[i].data;
+    //     });
+    //     myChart.data.labels = makeColumns(myChart.data.datasets);
+    //     myChart.update();
+    // });
   }); // Echo.channel('aboba')
   // .listen('BasketСhanged', (e) => {
   //     $('.suda').html('');
@@ -1979,15 +1990,14 @@ window.Chart = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist
  */
 
 
-window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
-window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
-  broadcaster: 'pusher',
-  key: "4555",
-  cluster: "mt1",
-  forceTLS: false,
-  wsHost: window.location.hostname,
-  wsPort: 6001
-});
+window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js"); // window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     forceTLS: false,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+// });
 
 /***/ }),
 
